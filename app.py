@@ -1,4 +1,5 @@
 import streamlit as st
+import time
 import pandas as pd
 import plotly.express as px
 from langchain_groq import ChatGroq
@@ -31,10 +32,15 @@ with col2:
 st.divider()
 st.header("Step 2: RAG & Agentic AI")
 api_key = st.sidebar.text_input("Enter Groq API Key:", type="password")
+if user_query:
+    with st.spinner("AI Agent is analyzing data..."):
+        time.sleep(1) # Add a 1-second pause to respect rate limits
+        response = agent.run(user_query)
+        st.success(f"AI Response: {response}")
 
 if api_key:
     try:
-        llm = ChatGroq(temperature=0, groq_api_key=api_key, model_name="llama-3.1-8b-instant")
+        llm = ChatGroq(temperature=0, groq_api_key=api_key, model_name="llama-3.3-70b-versatile")
         agent = create_pandas_dataframe_agent(llm, df, verbose=True, allow_dangerous_code=True)
         
         user_query = st.text_input("Ask the AI Agent about your business data:")
