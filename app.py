@@ -32,11 +32,6 @@ with col2:
 st.divider()
 st.header("Step 2: RAG & Agentic AI")
 api_key = st.sidebar.text_input("Enter Groq API Key:", type="password")
-if user_query:
-    with st.spinner("AI Agent is analyzing data..."):
-        time.sleep(1) # Add a 1-second pause to respect rate limits
-        response = agent.run(user_query)
-        st.success(f"AI Response: {response}")
 
 if api_key:
     try:
@@ -44,10 +39,11 @@ if api_key:
         agent = create_pandas_dataframe_agent(llm, df, verbose=True, allow_dangerous_code=True)
         
         user_query = st.text_input("Ask the AI Agent about your business data:")
-        if user_query:
-            with st.spinner("AI Agent is analyzing data..."):
-                response = agent.run(user_query)
-                st.success(f"AI Response: {response}")
+       if user_query:
+           with st.spinner("AI Agent is analyzing data..."):
+              time.sleep(1) # Add a 1-second pause to respect rate limits
+              response = agent.run(user_query)
+              st.success(f"AI Response: {response}")
     except Exception as e:
         st.error(f"Error: {e}")
 else:
