@@ -34,7 +34,7 @@ api_key = st.sidebar.text_input("Enter Groq API Key:", type="password")
 
 if api_key:
     try:
-        llm = ChatGroq(temperature=0, groq_api_key=api_key, model_name="llama3-8b-8192")
+        llm = ChatGroq(temperature=0, groq_api_key=api_key, model_name="llama-3.1-8b-instant")
         agent = create_pandas_dataframe_agent(llm, df, verbose=True, allow_dangerous_code=True)
         
         user_query = st.text_input("Ask the AI Agent about your business data:")
